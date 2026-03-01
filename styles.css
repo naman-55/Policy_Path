@@ -64,6 +64,7 @@
   padding: 0;
 }
 html {
+  scroll-behavior: smooth;
   font-size: 16px;
 }
 body {
@@ -94,13 +95,15 @@ img {
   max-width: 100%;
   display: block;
 }
-/* ---- Hide scrollbar (all browsers) ---- */
 ::-webkit-scrollbar {
-  display: none;
+  width: 6px;
 }
-html {
-  scrollbar-width: none;           /* Firefox */
-  -ms-overflow-style: none;        /* IE/Edge legacy */
+::-webkit-scrollbar-track {
+  background: var(--bg2);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 3px;
 }
 ::selection {
   background: var(--primary);
@@ -255,16 +258,15 @@ html {
   font-size: 0.88rem;
   font-weight: 500;
   color: var(--text2);
-  background: transparent;
   transition: all var(--transition);
 }
-.nav-link:hover {
+.nav-link:hover,
+.nav-link.active {
   color: var(--text);
   background: var(--surface2);
 }
 .nav-link.active {
   color: var(--primary);
-  background: var(--surface2);
 }
 .nav-actions {
   display: flex;
@@ -501,7 +503,46 @@ html {
     transform: translateY(0);
   }
 }
-
+.scroll-indicator {
+  position: absolute;
+  bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--text3);
+  font-size: 0.75rem;
+  animation: fadeInUp 1s ease 1s both;
+}
+.scroll-mouse {
+  width: 24px;
+  height: 38px;
+  border: 2px solid var(--text3);
+  border-radius: 12px;
+  position: relative;
+}
+.scroll-dot {
+  width: 4px;
+  height: 8px;
+  background: var(--primary);
+  border-radius: 2px;
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: scrollDot 2s ease-in-out infinite;
+}
+@keyframes scrollDot {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(-50%) translateY(14px);
+    opacity: 0;
+  }
+}
 
 /* ========== SECTIONS ========== */
 .section {
@@ -894,14 +935,11 @@ html {
   transition: color 0.3s;
 }
 .analysis-step.active {
-  color: var(--primary);
-  font-weight: 700;
-  transition: color 0.3s;
+  color: var(--text);
 }
 .analysis-step.done {
   color: var(--success);
 }
-
 .analysis-step.done .step-check {
   color: var(--success);
 }
@@ -1397,6 +1435,9 @@ html {
   padding: 36px;
   position: relative;
   animation: modalIn 0.4s ease;
+  background: var(--bg2) !important;
+  border: 1px solid var(--border);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
 }
 @keyframes modalIn {
   from {
@@ -1438,10 +1479,11 @@ html {
   font-size: 1.4rem;
   font-weight: 800;
   margin-bottom: 8px;
+  color: var(--text);
 }
 .modal-body .modal-ministry {
   font-size: 0.85rem;
-  color: var(--text3);
+  color: var(--text2);
   margin-bottom: 20px;
 }
 .modal-body .modal-badge {
@@ -1476,7 +1518,7 @@ html {
 .modal-body .modal-section p,
 .modal-body .modal-section li {
   font-size: 0.88rem;
-  color: var(--text2);
+  color: var(--text);
   line-height: 1.7;
 }
 .modal-body .modal-section ul {
@@ -1611,7 +1653,7 @@ html {
     left: 0;
     right: 0;
     flex-direction: column;
-    background: var(--bg);
+    background: var(--glass);
     backdrop-filter: blur(20px);
     padding: 16px;
     border-bottom: 1px solid var(--border2);
