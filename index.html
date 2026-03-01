@@ -1,0 +1,1184 @@
+﻿<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+    <!-- ===== Primary SEO Meta Tags ===== -->
+    <title>PolicyPath — Discover Government Schemes You Deserve</title>
+    <meta
+      name="description"
+      content="AI-powered platform to discover and apply for government schemes based on your personal profile. Matches 65+ central and state government schemes in seconds. Never miss a benefit again."
+    />
+    <meta
+      name="keywords"
+      content="government schemes India, PM schemes, central government schemes, state schemes, subsidies, financial aid, social programs, eligibility checker, AI recommendations"
+    />
+    <meta name="author" content="PolicyPath" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://policypath.in/" />
+    <meta name="theme-color" content="#6366f1" />
+
+    <!-- ===== Open Graph / Facebook ===== -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://policypath.in/" />
+    <meta
+      property="og:title"
+      content="PolicyPath — Discover Government Schemes You Deserve"
+    />
+    <meta
+      property="og:description"
+      content="AI-powered platform to discover and apply for government schemes based on your personal profile. Matches 65+ central & state schemes in seconds."
+    />
+    <meta property="og:image" content="https://policypath.in/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_IN" />
+    <meta property="og:site_name" content="PolicyPath" />
+
+    <!-- ===== Twitter Card ===== -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://policypath.in/" />
+    <meta
+      name="twitter:title"
+      content="PolicyPath — Discover Government Schemes You Deserve"
+    />
+    <meta
+      name="twitter:description"
+      content="AI-powered platform to discover and apply for 65+ government schemes based on your personal profile."
+    />
+    <meta name="twitter:image" content="https://policypath.in/og-image.png" />
+
+    <!-- ===== Structured Data (JSON-LD) ===== -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "PolicyPath",
+        "url": "https://policypath.in/",
+        "description": "AI-powered platform to discover and apply for government schemes based on your personal profile. Matches 65+ central and state government schemes instantly.",
+        "applicationCategory": "GovernmentApplication",
+        "operatingSystem": "Any",
+        "inLanguage": "en-IN",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "INR"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "PolicyPath",
+          "url": "https://policypath.in/"
+        },
+        "featureList": [
+          "AI-powered scheme matching",
+          "65+ government schemes database",
+          "Eligibility check in seconds",
+          "Personalized recommendations",
+          "State and central scheme coverage"
+        ]
+      }
+    </script>
+
+    <!-- ===== Preconnects & Fonts ===== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preconnect"
+      href="https://www.youtube-nocookie.com"
+      crossorigin
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <noscript>
+      <div
+        style="
+          padding: 1rem;
+          background: #1e1b4b;
+          color: #e0e7ff;
+          text-align: center;
+          font-family: sans-serif;
+        "
+      >
+        PolicyPath requires JavaScript to discover personalised government
+        schemes. Please enable JavaScript in your browser.
+      </div>
+    </noscript>
+    <!-- ============ GLOBAL CURSOR GLOW ============ -->
+    <div id="cursor-glow" class="cursor-glow"></div>
+
+    <!-- ============ NAVBAR ============ -->
+    <nav id="navbar" class="navbar">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo" id="nav-logo">
+          <div class="logo-icon">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <rect
+                x="2"
+                y="2"
+                width="24"
+                height="24"
+                rx="6"
+                stroke="url(#logoGrad)"
+                stroke-width="2.5"
+              />
+              <path
+                d="M9 14L12 17L19 10"
+                stroke="url(#logoGrad)"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <defs>
+                <linearGradient id="logoGrad" x1="0" y1="0" x2="28" y2="28">
+                  <stop stop-color="#6366f1" />
+                  <stop offset="1" stop-color="#a855f7" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <span class="logo-text">Policy<span class="logo-ai">path</span></span>
+        </a>
+        <div class="nav-links" id="nav-links">
+          <a href="#hero" class="nav-link active" data-section="hero">Home</a>
+
+          <a href="#form-section" class="nav-link" data-section="form-section"
+            >Discover</a
+          >
+
+          <a
+            href="#results-section"
+            class="nav-link"
+            data-section="results-section"
+            >Schemes</a
+          >
+
+          <a
+            href="#analytics-section"
+            class="nav-link"
+            data-section="analytics-section"
+            >Analytics</a
+          >
+        </div>
+        <div class="nav-actions">
+          <button
+            id="theme-toggle"
+            class="theme-toggle"
+            aria-label="Toggle dark mode"
+          >
+            <svg
+              class="sun-icon"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="5" />
+              <line x1="12" y1="1" x2="12" y2="3" />
+              <line x1="12" y1="21" x2="12" y2="23" />
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+              <line x1="1" y1="12" x2="3" y2="12" />
+              <line x1="21" y1="12" x2="23" y2="12" />
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+            </svg>
+            <svg
+              class="moon-icon"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+          </button>
+          <button
+            id="mobile-menu-btn"
+            class="mobile-menu-btn"
+            aria-label="Menu"
+          >
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ============ HERO SECTION ============ -->
+    <section id="hero" class="hero-section">
+      <div class="hero-bg-effects">
+        <div class="hero-orb hero-orb-1"></div>
+        <div class="hero-orb hero-orb-2"></div>
+        <div class="hero-orb hero-orb-3"></div>
+        <div class="hero-grid-overlay"></div>
+      </div>
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-pulse"></span>
+          <span class="badge-text">🚀 AI-Powered Scheme Discovery</span>
+        </div>
+        <h1 class="hero-title">
+          Discover Government Schemes
+          <span class="hero-gradient-text">You Truly Deserve</span>
+        </h1>
+        <p class="hero-subtitle">
+          Our AI engine analyzes your profile against
+          <strong>65+ government schemes</strong> to find the perfect benefits
+          for you. Stop missing out on financial aid, subsidies, and social
+          programs.
+        </p>
+        <div class="hero-cta-group">
+          <button id="hero-cta" class="btn btn-primary btn-lg">
+            <span>Find My Schemes</span>
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </button>
+          <button
+            id="hero-demo"
+            class="btn btn-glass btn-lg"
+            data-video="https://www.youtube.com/embed/M7lc1UVf-VE"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polygon points="5 3 19 12 5 21 5 3" />
+            </svg>
+            <span>Watch Demo</span>
+          </button>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="stat-number" data-target="65">65</span
+            ><span class="stat-suffix">+</span>
+            <span class="stat-label">Schemes</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="stat-number" data-target="50000">0</span
+            ><span class="stat-suffix">+</span>
+            <span class="stat-label">Users Helped</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="stat-number" data-target="97">0</span
+            ><span class="stat-suffix">%</span>
+            <span class="stat-label">Accuracy</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FORM SECTION ============ -->
+    <section id="form-section" class="section form-section">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-tag">Profile Input</span>
+          <h2 class="section-title">Tell Us About Yourself</h2>
+          <p class="section-subtitle">
+            Fill in your details and our AI will find the best schemes for you
+            in seconds.
+          </p>
+        </div>
+
+        <div class="form-layout">
+          <!-- Left: Form -->
+          <div class="form-card glass-card">
+            <div class="form-progress" id="form-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+              </div>
+              <span class="progress-text" id="progress-text">0% Complete</span>
+            </div>
+
+            <form id="user-form" autocomplete="off">
+              <!-- Step 1 -->
+              <div class="form-step active" data-step="1">
+                <h3 class="step-title">
+                  <span class="step-number">01</span> Personal Info
+                </h3>
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <div class="input-wrapper">
+                      <svg
+                        class="input-icon"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                      </svg>
+                      <input
+                        type="text"
+                        id="fullName"
+                        placeholder="Enter your full name"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="age">DOB</label>
+                    <div class="input-wrapper">
+                      <svg
+                        class="input-icon"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <rect
+                          x="3"
+                          y="4"
+                          width="18"
+                          height="18"
+                          rx="2"
+                          ry="2"
+                        />
+                        <line x1="16" y1="2" x2="16" y2="6" />
+                        <line x1="8" y1="2" x2="8" y2="6" />
+                        <line x1="3" y1="10" x2="21" y2="10" />
+                      </svg>
+                      <input type="date" id="dob" required />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <div class="select-wrapper">
+                      <select id="gender" required>
+                        <option value="" disabled selected>
+                          Select gender
+                        </option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="state">State</label>
+                    <div class="select-wrapper">
+                      <select id="state" required>
+                        <option value="" disabled selected>Select state</option>
+                        <option value="andhra-pradesh">Andhra Pradesh</option>
+                        <option value="arunachal-pradesh">
+                          Arunachal Pradesh
+                        </option>
+                        <option value="assam">Assam</option>
+                        <option value="bihar">Bihar</option>
+                        <option value="chhattisgarh">Chhattisgarh</option>
+                        <option value="goa">Goa</option>
+                        <option value="gujarat">Gujarat</option>
+                        <option value="haryana">Haryana</option>
+                        <option value="himachal-pradesh">
+                          Himachal Pradesh
+                        </option>
+                        <option value="jammu-kashmir">Jammu and Kashmir</option>
+                        <option value="jharkhand">Jharkhand</option>
+                        <option value="karnataka">Karnataka</option>
+                        <option value="kerala">Kerala</option>
+                        <option value="madhya-pradesh">Madhya Pradesh</option>
+                        <option value="maharashtra">Maharashtra</option>
+                        <option value="manipur">Manipur</option>
+                        <option value="meghalaya">Meghalaya</option>
+                        <option value="mizoram">Mizoram</option>
+                        <option value="nagaland">Nagaland</option>
+                        <option value="odisha">Odisha</option>
+                        <option value="punjab">Punjab</option>
+                        <option value="rajasthan">Rajasthan</option>
+                        <option value="sikkim">Sikkim</option>
+                        <option value="tamil-nadu">Tamil Nadu</option>
+                        <option value="telangana">Telangana</option>
+                        <option value="tripura">Tripura</option>
+                        <option value="uttar-pradesh">Uttar Pradesh</option>
+                        <option value="uttarakhand">Uttarakhand</option>
+                        <option value="west-bengal">West Bengal</option>
+                        <option value="andaman-nicobar">
+                          Andaman and Nicobar Islands
+                        </option>
+                        <option value="chandigarh">Chandigarh</option>
+                        <option value="dadra-nagar-haveli">
+                          Dadra and Nagar Haveli
+                        </option>
+                        <option value="daman-diu">Daman and Diu</option>
+                        <option value="delhi">Delhi</option>
+                        <option value="ladakh">Ladakh</option>
+                        <option value="lakshadweep">Lakshadweep</option>
+                        <option value="puducherry">Puducherry</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-actions">
+                  <div></div>
+                  <button
+                    type="button"
+                    class="btn btn-primary step-next"
+                    data-next="2"
+                  >
+                    Next Step
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.5"
+                    >
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Step 2 -->
+              <div class="form-step" data-step="2">
+                <h3 class="step-title">
+                  <span class="step-number">02</span> Employment & Income
+                </h3>
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label for="occupation">Occupation</label>
+                    <div class="select-wrapper">
+                      <select id="occupation" required>
+                        <option value="" disabled selected>
+                          Select occupation
+                        </option>
+                        <option value="student">Student</option>
+                        <option value="salaried">Salaried Employee</option>
+                        <option value="self-employed">Self-Employed</option>
+                        <option value="farmer">Farmer / Agriculture</option>
+                        <option value="daily-wage">Daily Wage Worker</option>
+                        <option value="business">Business Owner</option>
+                        <option value="unemployed">Unemployed</option>
+                        <option value="retired">
+                          Retired / Senior Citizen
+                        </option>
+                        <option value="homemaker">Homemaker</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="income">Annual Income (₹)</label>
+                    <div class="select-wrapper">
+                      <select id="income" required>
+                        <option value="" disabled selected>
+                          Select income range
+                        </option>
+                        <option value="No Income">No Income</option>
+                        <option value="below-1l">Below ₹1,00,000</option>
+                        <option value="1l-2.5l">₹1,00,000 – ₹2,50,000</option>
+                        <option value="2.5l-5l">₹2,50,000 – ₹5,00,000</option>
+                        <option value="5l-10l">₹5,00,000 – ₹10,00,000</option>
+                        <option value="above-10l">Above ₹10,00,000</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="category">Social Category</label>
+                    <div class="select-wrapper">
+                      <select id="category" required>
+                        <option value="" disabled selected>
+                          Select category
+                        </option>
+                        <option value="general">General</option>
+                        <option value="obc">OBC</option>
+                        <option value="sc">SC</option>
+                        <option value="st">ST</option>
+                        <option value="ews">EWS</option>
+                        <option value="minority">Minority</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="disability">Disability Status</label>
+                    <div class="select-wrapper">
+                      <select id="disability">
+                        <option value="none" selected>No Disability</option>
+                        <option value="physical">Physical Disability</option>
+                        <option value="visual">Visual Impairment</option>
+                        <option value="hearing">Hearing Impairment</option>
+                        <option value="intellectual">
+                          Intellectual Disability
+                        </option>
+                        <option value="other">Other Disability</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-actions">
+                  <button
+                    type="button"
+                    class="btn btn-ghost step-prev"
+                    data-prev="1"
+                  >
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.5"
+                    >
+                      <path d="M19 12H5M12 19l-7-7 7-7" />
+                    </svg>
+                    Previous
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary step-next"
+                    data-next="3"
+                  >
+                    Next Step
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.5"
+                    >
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Step 3 -->
+              <div class="form-step" data-step="3">
+                <h3 class="step-title">
+                  <span class="step-number">03</span> Additional Details
+                </h3>
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label for="education">Education</label>
+                    <div class="select-wrapper">
+                      <select id="education">
+                        <option value="" disabled selected>
+                          Select education level
+                        </option>
+                        <option value="below-10th">Below 10th</option>
+                        <option value="10th">10th Pass</option>
+                        <option value="12th">12th Pass</option>
+                        <option value="graduate">Graduate</option>
+                        <option value="post-graduate">Post Graduate</option>
+                        <option value="professional">
+                          Professional Degree
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="residence">Area of Residence</label>
+                    <div class="select-wrapper">
+                      <select id="residence">
+                        <option value="" disabled selected>
+                          Select area type
+                        </option>
+                        <option value="rural">Rural</option>
+                        <option value="urban">Urban</option>
+                        <option value="semi-urban">Semi-Urban</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group full-width">
+                    <label>Interests (Select all that apply)</label>
+                    <div class="checkbox-grid" id="interests-grid">
+                      <label class="checkbox-pill"
+                        ><input type="checkbox" value="education-scholarship" />
+                        🎓 Education & Scholarships</label
+                      >
+                      <label class="checkbox-pill"
+                        ><input type="checkbox" value="healthcare" /> 🏥
+                        Healthcare</label
+                      >
+                      <label class="checkbox-pill"
+                        ><input type="checkbox" value="housing" /> 🏠
+                        Housing</label
+                      >
+                      <label class="checkbox-pill"
+                        ><input type="checkbox" value="agriculture" /> 🌾
+                        Agriculture</label
+                      >
+                      <label class="checkbox-pill"
+                        ><input type="checkbox" value="business-startup" /> 💼
+                        Business & Startups</label
+                      >
+                      <label class="checkbox-pill"
+                        ><input type="checkbox" value="women-empowerment" /> 👩
+                        Women Empowerment</label
+                      >
+                      <label class="checkbox-pill"
+                        ><input type="checkbox" value="skill-development" /> 🛠️
+                        Skill Development</label
+                      >
+                      <label class="checkbox-pill"
+                        ><input type="checkbox" value="pension-insurance" /> 🛡️
+                        Pension & Insurance</label
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="form-actions">
+                  <button
+                    type="button"
+                    class="btn btn-ghost step-prev"
+                    data-prev="2"
+                  >
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.5"
+                    >
+                      <path d="M19 12H5M12 19l-7-7 7-7" />
+                    </svg>
+                    Previous
+                  </button>
+                  <button
+                    type="submit"
+                    class="btn btn-primary btn-glow"
+                    id="submit-btn"
+                  >
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path d="M22 2L11 13" />
+                      <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                    </svg>
+                    <span>Discover Schemes</span>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- Right: AI Sidebar -->
+          <div class="ai-sidebar glass-card">
+            <div class="ai-header">
+              <div class="ai-avatar">
+                <div class="ai-avatar-ring"></div>
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M12 2a4 4 0 0 1 4 4v1a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"
+                  />
+                  <path d="M16 11a4 4 0 0 1 0 8H8a4 4 0 0 1 0-8" />
+                  <line x1="9" y1="18" x2="9" y2="22" />
+                  <line x1="15" y1="18" x2="15" y2="22" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="ai-name">AI assistant</h3>
+                <div class="ai-status">
+                  <span class="status-dot online"></span>
+                  <span>Model Active</span>
+                </div>
+              </div>
+            </div>
+            <div class="ai-chat" id="ai-chat">
+              <div class="ai-message">
+                <p>
+                  👋 Hello! I'm your AI assistant. Fill in your details and I'll
+                  analyze <strong>65+ government schemes</strong> to find the
+                  best matches for you.
+                </p>
+              </div>
+              <div class="ai-message">
+                <p>
+                  💡 <strong>Tip:</strong> The more details you provide, the
+                  more accurate my recommendations will be!
+                </p>
+              </div>
+            </div>
+            <div class="ai-model-status">
+              <div class="model-indicator">
+                <span class="model-dot"></span>
+                <span class="model-label">GovScheme-AI v2.4</span>
+              </div>
+              <div class="model-metrics">
+                <div class="metric">
+                  <span class="metric-val">97.2%</span>
+                  <span class="metric-key">Accuracy</span>
+                </div>
+                <div class="metric">
+                  <span class="metric-val">0.3s</span>
+                  <span class="metric-key">Latency</span>
+                </div>
+                <div class="metric">
+                  <span class="metric-val">65+</span>
+                  <span class="metric-key">Schemes</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ AI ANALYSIS OVERLAY ============ -->
+    <div id="ai-analysis-overlay" class="ai-analysis-overlay hidden">
+      <div class="analysis-content">
+        <div class="analysis-brain">
+          <svg
+            width="80"
+            height="80"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="url(#brainGrad)"
+            stroke-width="1.5"
+          >
+            <path d="M12 2a4 4 0 0 1 4 4v1a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z" />
+            <path d="M16 11a4 4 0 0 1 0 8H8a4 4 0 0 1 0-8" />
+            <line x1="9" y1="18" x2="9" y2="22" />
+            <line x1="15" y1="18" x2="15" y2="22" />
+            <defs>
+              <linearGradient id="brainGrad" x1="0" y1="0" x2="24" y2="24">
+                <stop stop-color="#6366f1" />
+                <stop offset="1" stop-color="#a855f7" />
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="brain-pulse"></div>
+        </div>
+        <h2 class="analysis-title">AI Analyzing Your Profile...</h2>
+        <div class="analysis-steps" id="analysis-steps">
+          <div class="analysis-step" data-index="0">
+            <span class="step-check">⏳</span>
+            <span>Parsing personal details...</span>
+          </div>
+          <div class="analysis-step" data-index="1">
+            <span class="step-check">⏳</span>
+            <span>Matching eligibility criteria...</span>
+          </div>
+          <div class="analysis-step" data-index="2">
+            <span class="step-check">⏳</span>
+            <span>Scoring scheme relevance...</span>
+          </div>
+          <div class="analysis-step" data-index="3">
+            <span class="step-check">⏳</span>
+            <span>Generating AI recommendations...</span>
+          </div>
+          <div class="analysis-step" data-index="4">
+            <span class="step-check">⏳</span>
+            <span>Preparing your results...</span>
+          </div>
+        </div>
+        <div class="analysis-progress-bar">
+          <div class="analysis-progress-fill" id="analysis-progress-fill"></div>
+        </div>
+        <p class="analysis-percent" id="analysis-percent">0%</p>
+      </div>
+    </div>
+
+    <!-- ============ RESULTS SECTION ============ -->
+    <section id="results-section" class="section results-section hidden">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-tag">AI Results</span>
+          <h2 class="section-title">Your Recommended Schemes</h2>
+          <p class="section-subtitle" id="results-subtitle">
+            Based on your profile, here are the schemes you're eligible for.
+          </p>
+        </div>
+
+        <!-- AI Summary Card -->
+        <div class="ai-summary-card glass-card" id="ai-summary-card">
+          <div class="summary-header">
+            <div class="summary-avatar">
+              <svg
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M12 2a4 4 0 0 1 4 4v1a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"
+                />
+                <path d="M16 11a4 4 0 0 1 0 8H8a4 4 0 0 1 0-8" />
+                <line x1="9" y1="18" x2="9" y2="22" />
+                <line x1="15" y1="18" x2="15" y2="22" />
+              </svg>
+            </div>
+            <div>
+              <h3>AI Analysis Report</h3>
+              <span class="summary-time" id="summary-time"></span>
+            </div>
+            <div class="confidence-badge" id="overall-confidence">
+              <span class="confidence-ring"
+                ><svg width="44" height="44" viewBox="0 0 44 44">
+                  <circle
+                    cx="22"
+                    cy="22"
+                    r="18"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="3"
+                    opacity="0.15"
+                  />
+                  <circle
+                    class="confidence-arc"
+                    cx="22"
+                    cy="22"
+                    r="18"
+                    fill="none"
+                    stroke="url(#confGrad)"
+                    stroke-width="3"
+                    stroke-dasharray="113.1"
+                    stroke-dashoffset="113.1"
+                    stroke-linecap="round"
+                  />
+                  <defs>
+                    <linearGradient id="confGrad" x1="0" y1="0" x2="44" y2="44">
+                      <stop stop-color="#34d399" />
+                      <stop offset="1" stop-color="#6366f1" />
+                    </linearGradient>
+                  </defs></svg
+              ></span>
+              <span class="confidence-val" id="confidence-val">0%</span>
+              <span class="confidence-label">Match Score</span>
+            </div>
+          </div>
+          <p class="summary-text" id="summary-text"></p>
+          <div class="summary-tags" id="summary-tags"></div>
+        </div>
+
+        <!-- Search & Filters -->
+        <div class="results-toolbar">
+          <div class="search-bar glass-card">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input
+              type="text"
+              id="scheme-search"
+              placeholder="Search schemes..."
+            />
+          </div>
+          <div class="filter-pills" id="filter-pills">
+            <button class="filter-pill active" data-filter="all">All</button>
+            <button class="filter-pill" data-filter="education-scholarship">
+              🎓 Education
+            </button>
+            <button class="filter-pill" data-filter="healthcare">
+              🏥 Healthcare
+            </button>
+            <button class="filter-pill" data-filter="housing">
+              🏠 Housing
+            </button>
+            <button class="filter-pill" data-filter="agriculture">
+              🌾 Agriculture
+            </button>
+            <button class="filter-pill" data-filter="business-startup">
+              💼 Business
+            </button>
+            <button class="filter-pill" data-filter="women-empowerment">
+              👩 Women
+            </button>
+            <button class="filter-pill" data-filter="pension-insurance">
+              🛡️ Pension
+            </button>
+            <button class="filter-pill" data-filter="skill-development">
+              🛠️ Skills
+            </button>
+          </div>
+        </div>
+
+        <!-- Scheme Cards Grid -->
+        <div class="schemes-grid" id="schemes-grid">
+          <!-- Cards injected by JS -->
+        </div>
+
+        <!-- Re-analyze button -->
+        <div class="results-footer">
+          <button class="btn btn-glass" id="re-analyze-btn">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="1 4 1 10 7 10" />
+              <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+            </svg>
+            Re-Analyze Profile
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ANALYTICS SECTION ============ -->
+    <section id="analytics-section" class="section analytics-section hidden">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-tag">Dashboard</span>
+          <h2 class="section-title">Your Eligibility Analytics</h2>
+          <p class="section-subtitle">
+            Visualize your scheme eligibility breakdown and potential benefits.
+          </p>
+        </div>
+
+        <div class="analytics-grid">
+          <!-- Stat cards -->
+          <div class="analytics-stat-card glass-card" id="stat-total">
+            <div class="stat-icon purple">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                />
+                <polyline points="14 2 14 8 20 8" />
+              </svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-val" id="stat-total-val">0</span>
+              <span class="stat-key">Total Schemes</span>
+            </div>
+          </div>
+          <div class="analytics-stat-card glass-card" id="stat-high">
+            <div class="stat-icon green">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                <polyline points="17 6 23 6 23 12" />
+              </svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-val" id="stat-high-val">0</span>
+              <span class="stat-key">High Match</span>
+            </div>
+          </div>
+          <div class="analytics-stat-card glass-card" id="stat-benefits">
+            <div class="stat-icon blue">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <line x1="12" y1="1" x2="12" y2="23" />
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+              </svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-val" id="stat-benefits-val">₹0</span>
+              <span class="stat-key">Potential Benefits</span>
+            </div>
+          </div>
+          <div class="analytics-stat-card glass-card" id="stat-categories">
+            <div class="stat-icon amber">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <rect x="3" y="3" width="7" height="7" />
+                <rect x="14" y="3" width="7" height="7" />
+                <rect x="14" y="14" width="7" height="7" />
+                <rect x="3" y="14" width="7" height="7" />
+              </svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-val" id="stat-categories-val">0</span>
+              <span class="stat-key">Categories</span>
+            </div>
+          </div>
+
+          <!-- Chart area -->
+          <div class="chart-card glass-card" id="chart-card">
+            <h3 class="chart-title">Eligibility by Category</h3>
+            <div class="chart-bars" id="chart-bars">
+              <!-- Generated by JS -->
+            </div>
+          </div>
+
+          <!-- User behavior / profile card -->
+          <div
+            class="profile-summary-card glass-card"
+            id="profile-summary-card"
+          >
+            <h3 class="chart-title">Your Profile Summary</h3>
+            <div class="profile-details" id="profile-details">
+              <!-- Generated by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SCHEME DETAIL MODAL ============ -->
+    <div id="scheme-modal" class="modal-overlay hidden">
+      <div class="modal-content glass-card">
+        <button class="modal-close" id="modal-close" aria-label="Close modal">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+        <div class="modal-body" id="modal-body">
+          <!-- Injected by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ DEMO VIDEO MODAL ============ -->
+    <div id="demo-modal" class="modal-overlay hidden" aria-hidden="true">
+      <div class="modal-content glass-card">
+        <button
+          class="modal-close"
+          id="demo-modal-close"
+          aria-label="Close demo"
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+        <div class="modal-body" id="demo-modal-body">
+          <!-- Video iframe injected by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer" id="footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="logo-text"
+            >GovScheme<span class="logo-ai">AI</span></span
+          >
+          <p>Empowering citizens through AI-driven scheme discovery.</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h4>Platform</h4>
+            <a href="#form-section">Discover Schemes</a>
+            <a href="#results-section">AI Recommendations</a>
+            <a href="#analytics-section">Analytics</a>
+          </div>
+          <div class="footer-col">
+            <h4>Resources</h4>
+            <a
+              href="https://www.india.gov.in/"
+              rel="noopener noreferrer"
+              target="_blank"
+              >India.gov.in</a>
+              
+            <a
+              href="https://www.myscheme.gov.in/"
+              rel="noopener noreferrer"
+              target="_blank"
+              >MyScheme Portal</a>
+
+            <a
+              href="https://pmindia.gov.in/"
+              rel="noopener noreferrer"
+              target="_blank"
+              >PMIndia</a>
+
+          </div>
+          <div class="footer-col">
+            <h4>Legal</h4>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Contact Us</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 GovScheme AI. Built with ❤️ for India.</p>
+      </div>
+    </footer>
+
+    <script src="schemes-data.js" defer></script>
+    <script src="app.js" defer></script>
+  </body>
+</html>
