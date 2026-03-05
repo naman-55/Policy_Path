@@ -146,9 +146,19 @@
           <span class="logo-text">Policy<span class="logo-ai">path</span></span>
         </a>
         <div class="nav-links" id="nav-links">
-          <a href="#hero" class="nav-link active" data-section="hero">Home</a>
+          <a
+            href="#hero"
+            class="nav-link active"
+            data-section="hero"
+            data-i18n="navHome"
+            >Home</a
+          >
 
-          <a href="#form-section" class="nav-link" data-section="form-section"
+          <a
+            href="#form-section"
+            class="nav-link"
+            data-section="form-section"
+            data-i18n="navDiscover"
             >Discover</a
           >
 
@@ -156,6 +166,7 @@
             href="#results-section"
             class="nav-link"
             data-section="results-section"
+            data-i18n="navSchemes"
             >Schemes</a
           >
 
@@ -163,10 +174,62 @@
             href="#analytics-section"
             class="nav-link"
             data-section="analytics-section"
+            data-i18n="navAnalytics"
             >Analytics</a
           >
         </div>
         <div class="nav-actions">
+          <div class="lang-switcher" id="lang-switcher">
+            <button
+              class="lang-toggle"
+              id="lang-toggle"
+              aria-label="Change language"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <line x1="2" y1="12" x2="22" y2="12" />
+                <path
+                  d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z"
+                />
+              </svg>
+              <span class="lang-current" id="lang-current">EN</span>
+            </button>
+            <div class="lang-dropdown" id="lang-dropdown">
+              <button class="lang-option active" data-lang="en">
+                <span class="lang-flag">🇬🇧</span> English
+              </button>
+              <button class="lang-option" data-lang="hi">
+                <span class="lang-flag">🇮🇳</span> हिन्दी
+              </button>
+              <button class="lang-option" data-lang="mr">
+                <span class="lang-flag">🇮🇳</span> मराठी
+              </button>
+              <button class="lang-option" data-lang="ta">
+                <span class="lang-flag">🇮🇳</span> தமிழ்
+              </button>
+              <button class="lang-option" data-lang="te">
+                <span class="lang-flag">🇮🇳</span> తెలుగు
+              </button>
+              <button class="lang-option" data-lang="bn">
+                <span class="lang-flag">🇮🇳</span> বাংলা
+              </button>
+              <button class="lang-option" data-lang="gu">
+                <span class="lang-flag">🇮🇳</span> ગુજરાતી
+              </button>
+              <button class="lang-option" data-lang="kn">
+                <span class="lang-flag">🇮🇳</span> ಕನ್ನಡ
+              </button>
+            </div>
+          </div>
           <button
             id="theme-toggle"
             class="theme-toggle"
@@ -229,13 +292,17 @@
       <div class="hero-content">
         <div class="hero-badge">
           <span class="badge-pulse"></span>
-          <span class="badge-text">🚀 AI-Powered Scheme Discovery</span>
+          <span class="badge-text" data-i18n="heroBadge"
+            >🚀 AI-Powered Scheme Discovery</span
+          >
         </div>
-        <h1 class="hero-title">
+        <h1 class="hero-title" data-i18n="heroTitle">
           Discover Government Schemes
-          <span class="hero-gradient-text">You Truly Deserve</span>
+          <span class="hero-gradient-text" data-i18n="heroTitleHighlight"
+            >You Truly Deserve</span
+          >
         </h1>
-        <p class="hero-subtitle">
+        <p class="hero-subtitle" data-i18n="heroSubtitle">
           Our AI engine analyzes your profile against
           <strong>65+ government schemes</strong> to find the perfect benefits
           for you. Stop missing out on financial aid, subsidies, and social
@@ -243,7 +310,7 @@
         </p>
         <div class="hero-cta-group">
           <button id="hero-cta" class="btn btn-primary btn-lg">
-            <span>Find My Schemes</span>
+            <span data-i18n="heroCtaBtn">Find My Schemes</span>
             <svg
               width="20"
               height="20"
@@ -270,26 +337,28 @@
             >
               <polygon points="5 3 19 12 5 21 5 3" />
             </svg>
-            <span>Watch Demo</span>
+            <span data-i18n="heroWatchDemo">Watch Demo</span>
           </button>
         </div>
         <div class="hero-stats">
           <div class="hero-stat">
             <span class="stat-number" data-target="65">65</span
             ><span class="stat-suffix">+</span>
-            <span class="stat-label">Schemes</span>
+            <span class="stat-label" data-i18n="statSchemes">Schemes</span>
           </div>
           <div class="hero-stat-divider"></div>
           <div class="hero-stat">
             <span class="stat-number" data-target="50000">0</span
             ><span class="stat-suffix">+</span>
-            <span class="stat-label">Users Helped</span>
+            <span class="stat-label" data-i18n="statUsersHelped"
+              >Users Helped</span
+            >
           </div>
           <div class="hero-stat-divider"></div>
           <div class="hero-stat">
             <span class="stat-number" data-target="97">0</span
             ><span class="stat-suffix">%</span>
-            <span class="stat-label">Accuracy</span>
+            <span class="stat-label" data-i18n="statAccuracy">Accuracy</span>
           </div>
         </div>
       </div>
@@ -299,9 +368,11 @@
     <section id="form-section" class="section form-section">
       <div class="section-container">
         <div class="section-header">
-          <span class="section-tag">Profile Input</span>
-          <h2 class="section-title">Tell Us About Yourself</h2>
-          <p class="section-subtitle">
+          <span class="section-tag" data-i18n="formTag">Profile Input</span>
+          <h2 class="section-title" data-i18n="formTitle">
+            Tell Us About Yourself
+          </h2>
+          <p class="section-subtitle" data-i18n="formSubtitle">
             Fill in your details and our AI will find the best schemes for you
             in seconds.
           </p>
@@ -321,11 +392,12 @@
               <!-- Step 1 -->
               <div class="form-step active" data-step="1">
                 <h3 class="step-title">
-                  <span class="step-number">01</span> Personal Info
+                  <span class="step-number">01</span>
+                  <span data-i18n="step1Title">Personal Info</span>
                 </h3>
                 <div class="form-grid">
                   <div class="form-group">
-                    <label for="fullName">Full Name</label>
+                    <label for="fullName" data-i18n="fullName">Full Name</label>
                     <div class="input-wrapper">
                       <svg
                         class="input-icon"
@@ -343,12 +415,13 @@
                         type="text"
                         id="fullName"
                         placeholder="Enter your full name"
+                        data-i18n-placeholder="namePlaceholder"
                         required
                       />
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="age">DOB</label>
+                    <label for="age" data-i18n="dob">DOB</label>
                     <div class="input-wrapper">
                       <svg
                         class="input-icon"
@@ -375,7 +448,7 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="gender">Gender</label>
+                    <label for="gender" data-i18n="gender">Gender</label>
                     <div class="select-wrapper">
                       <select id="gender" required>
                         <option value="" disabled selected>
@@ -388,7 +461,7 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="state">State</label>
+                    <label for="state" data-i18n="state">State</label>
                     <div class="select-wrapper">
                       <select id="state" required>
                         <option value="" disabled selected>Select state</option>
@@ -448,7 +521,7 @@
                     class="btn btn-primary step-next"
                     data-next="2"
                   >
-                    Next Step
+                    <span data-i18n="nextStep">Next Step</span>
                     <svg
                       width="16"
                       height="16"
@@ -466,11 +539,14 @@
               <!-- Step 2 -->
               <div class="form-step" data-step="2">
                 <h3 class="step-title">
-                  <span class="step-number">02</span> Employment & Income
+                  <span class="step-number">02</span>
+                  <span data-i18n="step2Title">Employment & Income</span>
                 </h3>
                 <div class="form-grid">
                   <div class="form-group">
-                    <label for="occupation">Occupation</label>
+                    <label for="occupation" data-i18n="occupation"
+                      >Occupation</label
+                    >
                     <div class="select-wrapper">
                       <select id="occupation" required>
                         <option value="" disabled selected>
@@ -491,7 +567,9 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="income">Annual Income (₹)</label>
+                    <label for="income" data-i18n="income"
+                      >Annual Income (₹)</label
+                    >
                     <div class="select-wrapper">
                       <select id="income" required>
                         <option value="" disabled selected>
@@ -507,7 +585,9 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="category">Social Category</label>
+                    <label for="category" data-i18n="socialCategory"
+                      >Social Category</label
+                    >
                     <div class="select-wrapper">
                       <select id="category" required>
                         <option value="" disabled selected>
@@ -523,7 +603,9 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="disability">Disability Status</label>
+                    <label for="disability" data-i18n="disabilityStatus"
+                      >Disability Status</label
+                    >
                     <div class="select-wrapper">
                       <select id="disability">
                         <option value="none" selected>No Disability</option>
@@ -554,14 +636,14 @@
                     >
                       <path d="M19 12H5M12 19l-7-7 7-7" />
                     </svg>
-                    Previous
+                    <span data-i18n="prevStep">Previous</span>
                   </button>
                   <button
                     type="button"
                     class="btn btn-primary step-next"
                     data-next="3"
                   >
-                    Next Step
+                    <span data-i18n="nextStep">Next Step</span>
                     <svg
                       width="16"
                       height="16"
@@ -579,7 +661,8 @@
               <!-- Step 3 -->
               <div class="form-step" data-step="3">
                 <h3 class="step-title">
-                  <span class="step-number">03</span> Additional Details
+                  <span class="step-number">03</span>
+                  <span data-i18n="step3Title">Additional Details</span>
                 </h3>
                 <div class="form-grid">
                   <div class="form-group">
@@ -667,7 +750,7 @@
                     >
                       <path d="M19 12H5M12 19l-7-7 7-7" />
                     </svg>
-                    Previous
+                    <span data-i18n="prevStep">Previous</span>
                   </button>
                   <button
                     type="submit"
@@ -685,7 +768,7 @@
                       <path d="M22 2L11 13" />
                       <polygon points="22 2 15 22 11 13 2 9 22 2" />
                     </svg>
-                    <span>Discover Schemes</span>
+                    <span data-i18n="discoverBtn">Discover Schemes</span>
                   </button>
                 </div>
               </div>
@@ -714,27 +797,54 @@
                 </svg>
               </div>
               <div>
-                <h3 class="ai-name">AI assistant</h3>
+                <h3 class="ai-name" data-i18n="aiAssistant">AI assistant</h3>
                 <div class="ai-status">
                   <span class="status-dot online"></span>
-                  <span>Model Active</span>
+                  <span data-i18n="modelActive">Model Active</span>
                 </div>
               </div>
             </div>
             <div class="ai-chat" id="ai-chat">
               <div class="ai-message">
-                <p>
+                <p data-i18n="aiGreeting">
                   👋 Hello! I'm your AI assistant. Fill in your details and I'll
                   analyze <strong>65+ government schemes</strong> to find the
                   best matches for you.
                 </p>
               </div>
               <div class="ai-message">
-                <p>
+                <p data-i18n="aiTip">
                   💡 <strong>Tip:</strong> The more details you provide, the
                   more accurate my recommendations will be!
                 </p>
               </div>
+            </div>
+
+            <div class="ai-chat-input-wrapper">
+              <input
+                type="text"
+                id="ai-chat-input"
+                data-i18n-placeholder="chatPlaceholder"
+                placeholder="Ask me about schemes or errors..."
+                autocomplete="off"
+              />
+              <button
+                id="ai-chat-send"
+                class="btn btn-primary"
+                aria-label="Send"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M22 2L11 13" />
+                  <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                </svg>
+              </button>
             </div>
             <div class="ai-model-status">
               <div class="model-indicator">
@@ -744,15 +854,21 @@
               <div class="model-metrics">
                 <div class="metric">
                   <span class="metric-val">97.2%</span>
-                  <span class="metric-key">Accuracy</span>
+                  <span class="metric-key" data-i18n="statAccuracy"
+                    >Accuracy</span
+                  >
                 </div>
                 <div class="metric">
                   <span class="metric-val">0.3s</span>
-                  <span class="metric-key">Latency</span>
+                  <span class="metric-key" data-i18n="metricLatency"
+                    >Latency</span
+                  >
                 </div>
                 <div class="metric">
                   <span class="metric-val">65+</span>
-                  <span class="metric-key">Schemes</span>
+                  <span class="metric-key" data-i18n="statSchemes"
+                    >Schemes</span
+                  >
                 </div>
               </div>
             </div>
@@ -786,27 +902,33 @@
           </svg>
           <div class="brain-pulse"></div>
         </div>
-        <h2 class="analysis-title">AI Analyzing Your Profile...</h2>
+        <h2 class="analysis-title" data-i18n="analysisTitle">
+          AI Analyzing Your Profile...
+        </h2>
         <div class="analysis-steps" id="analysis-steps">
           <div class="analysis-step" data-index="0">
             <span class="step-check">⏳</span>
-            <span>Parsing personal details...</span>
+            <span data-i18n="analysisStep0">Parsing personal details...</span>
           </div>
           <div class="analysis-step" data-index="1">
             <span class="step-check">⏳</span>
-            <span>Matching eligibility criteria...</span>
+            <span data-i18n="analysisStep1"
+              >Matching eligibility criteria...</span
+            >
           </div>
           <div class="analysis-step" data-index="2">
             <span class="step-check">⏳</span>
-            <span>Scoring scheme relevance...</span>
+            <span data-i18n="analysisStep2">Scoring scheme relevance...</span>
           </div>
           <div class="analysis-step" data-index="3">
             <span class="step-check">⏳</span>
-            <span>Generating AI recommendations...</span>
+            <span data-i18n="analysisStep3"
+              >Generating AI recommendations...</span
+            >
           </div>
           <div class="analysis-step" data-index="4">
             <span class="step-check">⏳</span>
-            <span>Preparing your results...</span>
+            <span data-i18n="analysisStep4">Preparing your results...</span>
           </div>
         </div>
         <div class="analysis-progress-bar">
@@ -820,9 +942,15 @@
     <section id="results-section" class="section results-section hidden">
       <div class="section-container">
         <div class="section-header">
-          <span class="section-tag">AI Results</span>
-          <h2 class="section-title">Your Recommended Schemes</h2>
-          <p class="section-subtitle" id="results-subtitle">
+          <span class="section-tag" data-i18n="resultsTag">AI Results</span>
+          <h2 class="section-title" data-i18n="resultsTitle">
+            Your Recommended Schemes
+          </h2>
+          <p
+            class="section-subtitle"
+            id="results-subtitle"
+            data-i18n="resultsSubtitle"
+          >
             Based on your profile, here are the schemes you're eligible for.
           </p>
         </div>
@@ -848,7 +976,7 @@
               </svg>
             </div>
             <div>
-              <h3>AI Analysis Report</h3>
+              <h3 data-i18n="aiReport">AI Analysis Report</h3>
               <span class="summary-time" id="summary-time"></span>
             </div>
             <div class="confidence-badge" id="overall-confidence">
@@ -883,7 +1011,9 @@
                   </defs></svg
               ></span>
               <span class="confidence-val" id="confidence-val">0%</span>
-              <span class="confidence-label">Match Score</span>
+              <span class="confidence-label" data-i18n="matchScore"
+                >Match Score</span
+              >
             </div>
           </div>
           <p class="summary-text" id="summary-text"></p>
@@ -907,33 +1037,73 @@
             <input
               type="text"
               id="scheme-search"
+              id="scheme-search-input"
               placeholder="Search schemes..."
+              data-i18n-placeholder="searchSchemes"
             />
           </div>
           <div class="filter-pills" id="filter-pills">
-            <button class="filter-pill active" data-filter="all">All</button>
-            <button class="filter-pill" data-filter="education-scholarship">
+            <button
+              class="filter-pill active"
+              data-filter="all"
+              data-i18n="filterAll"
+            >
+              All
+            </button>
+            <button
+              class="filter-pill"
+              data-filter="education-scholarship"
+              data-i18n="filterEducation"
+            >
               🎓 Education
             </button>
-            <button class="filter-pill" data-filter="healthcare">
+            <button
+              class="filter-pill"
+              data-filter="healthcare"
+              data-i18n="filterHealthcare"
+            >
               🏥 Healthcare
             </button>
-            <button class="filter-pill" data-filter="housing">
+            <button
+              class="filter-pill"
+              data-filter="housing"
+              data-i18n="filterHousing"
+            >
               🏠 Housing
             </button>
-            <button class="filter-pill" data-filter="agriculture">
+            <button
+              class="filter-pill"
+              data-filter="agriculture"
+              data-i18n="filterAgriculture"
+            >
               🌾 Agriculture
             </button>
-            <button class="filter-pill" data-filter="business-startup">
+            <button
+              class="filter-pill"
+              data-filter="business-startup"
+              data-i18n="filterBusiness"
+            >
               💼 Business
             </button>
-            <button class="filter-pill" data-filter="women-empowerment">
+            <button
+              class="filter-pill"
+              data-filter="women-empowerment"
+              data-i18n="filterWomen"
+            >
               👩 Women
             </button>
-            <button class="filter-pill" data-filter="pension-insurance">
+            <button
+              class="filter-pill"
+              data-filter="pension-insurance"
+              data-i18n="filterPension"
+            >
               🛡️ Pension
             </button>
-            <button class="filter-pill" data-filter="skill-development">
+            <button
+              class="filter-pill"
+              data-filter="skill-development"
+              data-i18n="filterSkills"
+            >
               🛠️ Skills
             </button>
           </div>
@@ -958,7 +1128,7 @@
               <polyline points="1 4 1 10 7 10" />
               <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
             </svg>
-            Re-Analyze Profile
+            <span data-i18n="reAnalyze">Re-Analyze Profile</span>
           </button>
         </div>
       </div>
@@ -968,9 +1138,11 @@
     <section id="analytics-section" class="section analytics-section hidden">
       <div class="section-container">
         <div class="section-header">
-          <span class="section-tag">Dashboard</span>
-          <h2 class="section-title">Your Eligibility Analytics</h2>
-          <p class="section-subtitle">
+          <span class="section-tag" data-i18n="analyticsTag">Dashboard</span>
+          <h2 class="section-title" data-i18n="analyticsTitle">
+            Your Eligibility Analytics
+          </h2>
+          <p class="section-subtitle" data-i18n="analyticsSubtitle">
             Visualize your scheme eligibility breakdown and potential benefits.
           </p>
         </div>
@@ -995,7 +1167,9 @@
             </div>
             <div class="stat-info">
               <span class="stat-val" id="stat-total-val">0</span>
-              <span class="stat-key">Total Schemes</span>
+              <span class="stat-key" data-i18n="totalSchemes"
+                >Total Schemes</span
+              >
             </div>
           </div>
           <div class="analytics-stat-card glass-card" id="stat-high">
@@ -1014,7 +1188,7 @@
             </div>
             <div class="stat-info">
               <span class="stat-val" id="stat-high-val">0</span>
-              <span class="stat-key">High Match</span>
+              <span class="stat-key" data-i18n="highMatch">High Match</span>
             </div>
           </div>
           <div class="analytics-stat-card glass-card" id="stat-benefits">
@@ -1033,7 +1207,9 @@
             </div>
             <div class="stat-info">
               <span class="stat-val" id="stat-benefits-val">₹0</span>
-              <span class="stat-key">Potential Benefits</span>
+              <span class="stat-key" data-i18n="potentialBenefits"
+                >Potential Benefits</span
+              >
             </div>
           </div>
           <div class="analytics-stat-card glass-card" id="stat-categories">
@@ -1054,13 +1230,15 @@
             </div>
             <div class="stat-info">
               <span class="stat-val" id="stat-categories-val">0</span>
-              <span class="stat-key">Categories</span>
+              <span class="stat-key" data-i18n="categories">Categories</span>
             </div>
           </div>
 
           <!-- Chart area -->
           <div class="chart-card glass-card" id="chart-card">
-            <h3 class="chart-title">Eligibility by Category</h3>
+            <h3 class="chart-title" data-i18n="eligibilityByCategory">
+              Eligibility by Category
+            </h3>
             <div class="chart-bars" id="chart-bars">
               <!-- Generated by JS -->
             </div>
@@ -1135,49 +1313,60 @@
           <span class="logo-text"
             >GovScheme<span class="logo-ai">AI</span></span
           >
-          <p>Empowering citizens through AI-driven scheme discovery.</p>
+          <p data-i18n="footerDesc">
+            Empowering citizens through AI-driven scheme discovery.
+          </p>
         </div>
         <div class="footer-links">
           <div class="footer-col">
-            <h4>Platform</h4>
-            <a href="#form-section">Discover Schemes</a>
-            <a href="#results-section">AI Recommendations</a>
-            <a href="#analytics-section">Analytics</a>
+            <h4 data-i18n="footerPlatform">Platform</h4>
+            <a href="#form-section" data-i18n="footerDiscover"
+              >Discover Schemes</a
+            >
+            <a href="#results-section" data-i18n="footerRecommendations"
+              >AI Recommendations</a
+            >
+            <a href="#analytics-section" data-i18n="navAnalytics">Analytics</a>
           </div>
           <div class="footer-col">
-            <h4>Resources</h4>
+            <h4 data-i18n="footerResources">Resources</h4>
             <a
               href="https://www.india.gov.in/"
               rel="noopener noreferrer"
               target="_blank"
-              >India.gov.in</a>
-              
+              >India.gov.in</a
+            >
+
             <a
               href="https://www.myscheme.gov.in/"
               rel="noopener noreferrer"
               target="_blank"
-              >MyScheme Portal</a>
+              >MyScheme Portal</a
+            >
 
             <a
               href="https://pmindia.gov.in/"
               rel="noopener noreferrer"
               target="_blank"
-              >PMIndia</a>
-
+              >PMIndia</a
+            >
           </div>
           <div class="footer-col">
-            <h4>Legal</h4>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">Contact Us</a>
+            <h4 data-i18n="footerLegal">Legal</h4>
+            <a href="#" data-i18n="footerPrivacy">Privacy Policy</a>
+            <a href="#" data-i18n="footerTerms">Terms of Service</a>
+            <a href="#" data-i18n="footerContact">Contact Us</a>
           </div>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>© 2026 GovScheme AI. Built with ❤️ for India.</p>
+        <p data-i18n="footerCopyright">
+          © 2026 GovScheme AI. Built with ❤️ for India.
+        </p>
       </div>
     </footer>
 
+    <script src="translation.js" defer></script>
     <script src="schemes-data.js" defer></script>
     <script src="app.js" defer></script>
   </body>

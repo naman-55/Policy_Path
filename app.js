@@ -56,6 +56,246 @@
     localStorage.setItem("govscheme-theme", next);
   });
   initTheme();
+
+  // ---- LANGUAGE SWITCHER ----
+  let currentLang = localStorage.getItem("govscheme-lang") || "en";
+  const langSwitcher = $("#lang-switcher");
+  const langToggle = $("#lang-toggle");
+  const langCurrent = $("#lang-current");
+  const langOptions = $$(".lang-option");
+
+  function setLanguage(lang) {
+    if (!TRANSLATIONS[lang]) lang = "en";
+    currentLang = lang;
+    localStorage.setItem("govscheme-lang", lang);
+
+    // Update UI toggle text
+    langCurrent.textContent = LANG_LABELS[lang];
+
+    // Update active state in dropdown
+    langOptions.forEach(opt => {
+      opt.classList.toggle("active", opt.dataset.lang === lang);
+    });
+
+    // Apply translations completely
+    applyTranslations();
+  }
+
+  function applyTranslations() {
+    const dict = TRANSLATIONS[currentLang];
+    if (!dict) return;
+
+    // 1. Static elements with data-i18n
+    $$("[data-i18n]").forEach(el => {
+      const key = el.dataset.i18n;
+      if (!dict[key]) return;
+      if (dict[key].includes("<")) { el.innerHTML = dict[key]; }
+      else { el.textContent = dict[key]; }
+    });
+
+    // 2. Input placeholders with data-i18n-placeholder
+    $$("[data-i18n-placeholder]").forEach(el => {
+      const key = el.dataset.i18nPlaceholder;
+      if (dict[key]) el.placeholder = dict[key];
+    });
+
+    // 3. Search input placeholder (fallback by id)
+    const searchInput = $("#scheme-search");
+    if (searchInput && dict.searchSchemes) searchInput.placeholder = dict.searchSchemes;
+
+    // 4. Progress text
+    if (progressText && dict.pctComplete) {
+      const pct = progressText.textContent.replace(/[^0-9]/g, "");
+      progressText.textContent = pct + dict.pctComplete;
+    }
+
+    // 5. No-results message (re-render if visible)
+    const noSchemesEl = document.querySelector(".no-schemes-msg");
+    if (noSchemesEl && dict.noSchemes) noSchemesEl.textContent = dict.noSchemes;
+
+    // 6. Translate the dynamic schemes
+    if (currentLang !== "en") {
+      translateAllSchemes(currentLang).then(() => {
+        // Re-render schemes and modal if open
+        if (!$("#results-section").classList.contains("hidden")) {
+           renderSchemeCards(matchedSchemes.length > 0 ? matchedSchemes : SCHEMES_DB);
+        }
+      });
+    } else {
+      // If english, simply re-render
+      // If english, simply re-render
+      if (!$("#results-section").classList.contains("hidden")) {
+         renderSchemeCards(matchedSchemes.length > 0 ? matchedSchemes : SCHEMES_DB);
+      }
+    }
+
+    // 7. Auto-translate UI elements (Options, Category Checkboxes)
+    translateAutoElements(currentLang);
+    
+    // 8. Re-render Analytics if active
+    if (window.currentProfile && !$("#analytics-section").classList.contains("hidden")) {
+        renderAnalytics(window.currentProfile, matchedSchemes);
+    }
+  }
+
+  // --- AUTO TRANSLATE ENGINE FOR LOOSE ELEMENTS ---
+  $$('option, .checkbox-pill').forEach(el => el.classList.add('auto-translate'));
+  
+  const autoTranslateCache = JSON.parse(localStorage.getItem('govscheme-auto-cache') || '{}');
+  
+  async function translateAutoElements(targetLang) {
+    if (targetLang === 'en') {
+      $$('.auto-translate').forEach(el => {
+        if (el.dataset.rawEn) {
+           if (el.tagName === 'LABEL') el.childNodes[1].textContent = " " + el.dataset.rawEn;
+           else el.textContent = el.dataset.rawEn;
+        }
+      });
+      return;
+    }
+
+    if (!autoTranslateCache[targetLang]) autoTranslateCache[targetLang] = {};
+    const cache = autoTranslateCache[targetLang];
+    
+    let needed = new Set();
+    $$('.auto-translate').forEach(el => {
+      let txt = el.tagName === 'LABEL' ? el.textContent.replace(/[\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDDFF]/g, '').trim() : el.textContent.trim();
+      if (!el.dataset.rawEn) el.dataset.rawEn = txt;
+      txt = el.dataset.rawEn;
+      if (txt && !cache[txt]) needed.add(txt);
+    });
+    
+    const neededArr = Array.from(needed);
+    if (neededArr.length > 0) {
+      try {
+        const textToTranslate = neededArr.join(' ~~~ ');
+        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${targetLang}&dt=t&q=${encodeURIComponent(textToTranslate)}`;
+        const res = await fetch(url);
+        const data = await res.json();
+        const translatedArr = data[0].map(x => x[0]).join('').split(/\s*~~~\s*/);
+        
+        let ptr = 0;
+        neededArr.forEach(txt => {
+           cache[txt] = translatedArr[ptr++] || txt;
+        });
+        localStorage.setItem('govscheme-auto-cache', JSON.stringify(autoTranslateCache));
+      } catch(e) {}
+    }
+    
+    $$('.auto-translate').forEach(el => {
+      const txt = el.dataset.rawEn;
+      if (txt && cache[txt]) {
+         if (el.tagName === 'LABEL') {
+           // For checkbox pills, keep the icon and checkbox untouched
+           const icon = el.textContent.match(/[\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDDFF]/g) || [""];
+           el.childNodes[1].textContent = " " + cache[txt];
+         } else {
+           el.textContent = cache[txt];
+         }
+      }
+    });
+  }
+
+  // --- DYNAMIC SCHEME TRANSLATION ENGINE ---
+  const schemeCache = JSON.parse(localStorage.getItem('govscheme-cache') || '{}');
+  
+  async function translateAllSchemes(targetLang) {
+    let toTranslate = [];
+    
+    // Check what needs translating
+    SCHEMES_DB.forEach(scheme => {
+      if (!schemeCache[targetLang]) schemeCache[targetLang] = {};
+      const cached = schemeCache[targetLang][scheme.id];
+      if (!cached) {
+         toTranslate.push(scheme);
+      }
+    });
+
+    if (toTranslate.length === 0) return; // All cached!
+
+    // Show loading state on cards during translation
+    $$('.scheme-card-desc').forEach(el => el.textContent = "Translating...");
+
+    try {
+      // Batch translations to avoid rate limits (approx 5 schemes per batch)
+      const batchSize = 5;
+      for (let i = 0; i < toTranslate.length; i += batchSize) {
+        const batch = toTranslate.slice(i, i + batchSize);
+        let textArr = [];
+        batch.forEach(s => {
+          textArr.push(s.name);
+          textArr.push(s.ministry);
+          textArr.push(s.description);
+          textArr.push(s.howToApply);
+          s.benefits.forEach(b => textArr.push(b));
+        });
+
+        const textToTranslate = textArr.join(' ~~~ ');
+        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${targetLang}&dt=t&q=${encodeURIComponent(textToTranslate)}`;
+        
+        const res = await fetch(url);
+        const data = await res.json();
+        
+        const translatedText = data[0].map(x => x[0]).join('');
+        const translatedArr = translatedText.split(/\s*~~~\s*/);
+
+        let ptr = 0;
+        batch.forEach(s => {
+          try {
+            schemeCache[targetLang][s.id] = {
+              name: translatedArr[ptr++] || s.name,
+              ministry: translatedArr[ptr++] || s.ministry,
+              description: translatedArr[ptr++] || s.description,
+              howToApply: translatedArr[ptr++] || s.howToApply,
+              benefits: s.benefits.map(() => translatedArr[ptr++] || "")
+            };
+          } catch(e) {
+            // Fallback if parsing misalignment
+            schemeCache[targetLang][s.id] = s;
+          }
+        });
+        
+        // Save to local storage piece by piece
+        localStorage.setItem('govscheme-cache', JSON.stringify(schemeCache));
+      }
+    } catch (e) {
+      console.error("Translation API error:", e);
+    }
+  }
+
+  function getLocalizedScheme(scheme) {
+    if (currentLang === "en") return scheme;
+    const cache = schemeCache[currentLang];
+    if (cache && cache[scheme.id]) {
+      return { ...scheme, ...cache[scheme.id] };
+    }
+    return scheme; // raw fallback
+  }
+
+  // Toggle Dropdown
+  langToggle.addEventListener("click", (e) => {
+    e.stopPropagation();
+    langSwitcher.classList.toggle("active");
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener("click", (e) => {
+    if (!langSwitcher.contains(e.target)) {
+      langSwitcher.classList.remove("active");
+    }
+  });
+
+  // Handle language selection
+  langOptions.forEach(opt => {
+    opt.addEventListener("click", () => {
+      setLanguage(opt.dataset.lang);
+      langSwitcher.classList.remove("active");
+    });
+  });
+
+  // Initialize Language
+  setLanguage(currentLang);
+
   // ---- SHOW ALL SCHEMES (Browse Mode) ----
 const schemesNavBtn = document.querySelector('[data-section="results-section"]');
 
@@ -203,7 +443,8 @@ if (schemesNavBtn) {
       currentStep = n;
       const pct = Math.round(((n - 1) / 3) * 100);
       progressFill.style.width = pct + "%";
-      progressText.textContent = pct + "% Complete";
+      const dict = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+      progressText.textContent = pct + (dict.pctComplete || "% Complete");
       updateAIChat(n);
     }
   }
@@ -230,17 +471,19 @@ if (schemesNavBtn) {
       }
     });
     if (!valid) {
-      addAIMessage("⚠️ Please fill in all required fields before proceeding.", "warning");
+      const dict = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+      addAIMessage(dict.aiChatWarning || "⚠️ Please fill in all required fields before proceeding.", "warning");
     }
     return valid;
   }
 
   // ---- AI CHAT UPDATES ----
   function updateAIChat(step) {
+    const dict = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
     const msgs = {
-      1: "📝 Great start! Personal information helps me narrow down state-specific and demographic-targeted schemes.",
-      2: "💰 Employment and income data are crucial — many schemes have specific income ceiling requirements.",
-      3: "🎯 Almost there! Additional details will help me fine-tune the AI matching algorithm for better results.",
+      1: dict.aiChatStep1 || "📝 Great start! Personal information helps me narrow down schemes.",
+      2: dict.aiChatStep2 || "💰 Employment and income data are crucial for eligibility.",
+      3: dict.aiChatStep3 || "🎯 Almost there! Additional details will help fine-tune results.",
     };
     if (msgs[step]) addAIMessage(msgs[step]);
   }
@@ -248,16 +491,87 @@ if (schemesNavBtn) {
   function addAIMessage(text, type = "info") {
     const div = document.createElement("div");
     div.className = "ai-message";
+    if (type === "user") {
+      div.classList.add("ai-message-user");
+      div.style.background = "var(--primary)";
+      div.style.color = "#fff";
+      div.style.marginLeft = "auto";
+      div.style.marginRight = "0";
+      div.style.borderBottomRightRadius = "6px";
+      div.style.borderBottomLeftRadius = "20px";
+    }
+    if (type === "warning") {
+      div.style.borderLeft = "3px solid var(--danger)";
+    }
     div.innerHTML = `<p>${text}</p>`;
     aiChat.appendChild(div);
     aiChat.scrollTop = aiChat.scrollHeight;
   }
+
+  // --- INTERACTIVE CHATBOT ---
+  const chatInput = $("#ai-chat-input");
+  const chatSendBtn = $("#ai-chat-send");
+
+  async function handleUserChat() {
+    const val = chatInput.value.trim();
+    if (!val) return;
+    
+    // Add user message to UI
+    addAIMessage(val, "user");
+    chatInput.value = "";
+
+    // Show typing state
+    const typingId = "typing-" + Date.now();
+    const div = document.createElement("div");
+    div.className = "ai-message ai-typing";
+    div.id = typingId;
+    div.innerHTML = `<p>...</p>`;
+    aiChat.appendChild(div);
+    aiChat.scrollTop = aiChat.scrollHeight;
+
+    // Simulate Network/Processing Delay
+    setTimeout(async () => {
+      const el = document.getElementById(typingId);
+      if (el) el.remove();
+
+      const dict = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+      
+      // Provide simple interactive logic -> We could hook this into an LLM, but for hackathon demo we mock it
+      let replyText = "I analyze your profile to find the best government schemes. For more accuracy, please fill the form.";
+      
+      if (val.toLowerCase().includes("error") || val.toLowerCase().includes("mistake")) {
+        replyText = "If you made a mistake, you can go to the previous steps in the form or edit your profile later.";
+      } else if (val.toLowerCase().includes("hello") || val.toLowerCase().includes("hi")) {
+        replyText = "Hello! I am ready to assist you in discovering government schemes.";
+      } else if (val.toLowerCase().includes("documents") || val.toLowerCase().includes("proof")) {
+        replyText = "You generally need Aadhaar, Bank Details, and an Income Certificate for most schemes.";
+      }
+
+      // If user language is NOT english, dynamically translate the reply
+      if (currentLang !== "en") {
+        try {
+           const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${currentLang}&dt=t&q=${encodeURIComponent(replyText)}`;
+           const res = await fetch(url);
+           const data = await res.json();
+           replyText = data[0].map(x => x[0]).join('');
+        } catch(e) { /* fallback */ }
+      }
+      
+      addAIMessage(replyText, "info");
+    }, 1000);
+  }
+
+  if (chatSendBtn) chatSendBtn.addEventListener("click", handleUserChat);
+  if (chatInput) chatInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") handleUserChat();
+  });
 
   // ---- FORM SUBMIT ----
   userForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (!validateStep(currentStep)) return;
     const profile = getProfile();
+    window.currentProfile = profile; // Save globally for re-rendering on language switch
     progressFill.style.width = "100%";
     progressText.textContent = "100% Complete";
     await runAIAnalysis(profile);
@@ -395,10 +709,10 @@ if (schemesNavBtn) {
     if (reBtn) reBtn.closest(".results-footer").style.display = "none";
 
     // Update header to show total schemes
-    $(".results-section .section-tag").textContent = "All Schemes";
-    $(".results-section .section-title").textContent = `${SCHEMES_DB.length} Government Schemes`;
-    $("#results-subtitle").textContent =
-      "Browse all available schemes. Use the search and filters below to find what you need.";
+    const dict = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+    $(".results-section .section-tag").textContent = dict.filterAll || "All Schemes";
+    $(".results-section .section-title").textContent = `${SCHEMES_DB.length} ${dict.statSchemes || "Government Schemes"}`;
+    $("#results-subtitle").textContent = dict.browseAllSubtitle || "Browse all available schemes. Use the search and filters below to find what you need.";
 
     // Set matchedSchemes = all schemes (no confidence scoring)
     matchedSchemes = SCHEMES_DB.map((s) => ({ ...s, confidence: 100 }));
@@ -428,17 +742,23 @@ if (schemesNavBtn) {
     if (summaryCard) summaryCard.style.display = "";
     const reFooter = $("#re-analyze-btn")?.closest(".results-footer");
     if (reFooter) reFooter.style.display = "";
-    $(".results-section .section-tag").textContent = "AI Results";
-    $(".results-section .section-title").textContent = "Your Recommended Schemes";
+    const dict = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+    $(".results-section .section-tag").textContent = dict.resultsTag || "AI Results";
+    $(".results-section .section-title").textContent = dict.resultsTitle || "Your Recommended Schemes";
 
     resultsSection.scrollIntoView({ behavior: "smooth" });
 
     // Summary
     const highMatches = schemes.filter((s) => s.confidence >= 70).length;
     const avgConf = schemes.length ? Math.round(schemes.reduce((a, s) => a + s.confidence, 0) / schemes.length) : 0;
-    $("#summary-text").textContent = `Hi ${profile.name}! Based on your profile as a ${profile.age}-year-old ${profile.occupation.replace(/-/g, " ")} with an income of ${incomeLabel(profile.income)}, I found ${schemes.length} schemes you may be eligible for. ${highMatches} schemes have a high match score (>70%). I recommend starting with the top-rated ones for maximum benefit.`;
-    $("#summary-time").textContent = `Analysis completed at ${new Date().toLocaleTimeString()}`;
-    $("#results-subtitle").textContent = `Found ${schemes.length} schemes matching your profile`;
+    
+    // Simple dynamic summary text (can be extended to use fully translated strings)
+    const summaryHi = dict.summaryHi || "Hi";
+    const summaryFound = dict.summaryFound || "I found";
+    const summarySchemes = dict.summarySchemes || "schemes you may be eligible for.";
+    $("#summary-text").textContent = `${summaryHi} ${profile.name}! ${summaryFound} ${schemes.length} ${summarySchemes}`;
+    $("#summary-time").textContent = `${dict.analysisCompleted || "Analysis completed at"} ${new Date().toLocaleTimeString()}`;
+    $("#results-subtitle").textContent = `${dict.foundMatches1 || "Found"} ${schemes.length} ${dict.foundMatches2 || "schemes matching your profile"}`;
 
     // Confidence ring
     animateConfidence(avgConf);
@@ -481,11 +801,13 @@ if (schemesNavBtn) {
     });
 
     if (filtered.length === 0) {
-      schemesGrid.innerHTML = `<div class="glass-card" style="grid-column:1/-1;padding:48px;text-align:center"><p style="color:var(--text2)">No schemes found matching your criteria. Try adjusting filters.</p></div>`;
+      const dict = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+      schemesGrid.innerHTML = `<div class="glass-card no-schemes-msg" style="grid-column:1/-1;padding:48px;text-align:center"><p style="color:var(--text2)">${dict.noSchemes || 'No schemes found matching your criteria. Try adjusting filters.'}</p></div>`;
       return;
     }
 
-    filtered.forEach((scheme, i) => {
+    filtered.forEach((schemeRaw, i) => {
+      const scheme = getLocalizedScheme(schemeRaw);
       const card = document.createElement("div");
       card.className = "scheme-card glass-card";
       card.style.animationDelay = i * 0.08 + "s";
@@ -495,6 +817,9 @@ if (schemesNavBtn) {
       const barClass = scheme.confidence >= 70 ? "high" : scheme.confidence >= 50 ? "med" : "low";
       const stars = "★".repeat(Math.round(scheme.rating)) + "☆".repeat(5 - Math.round(scheme.rating));
 
+      const dict = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+      const matchLabel = dict.schemeMatch || 'Match';
+      const benLabel = dict.schemeBeneficiaries || 'beneficiaries';
       card.innerHTML = `
         <div class="scheme-card-header">
           <div class="scheme-icon ${scheme.color}">${scheme.icon}</div>
@@ -505,9 +830,9 @@ if (schemesNavBtn) {
         </div>
         <p class="scheme-card-desc">${scheme.description}</p>
         <div class="scheme-card-tags">
-          <span class="scheme-tag match-${matchClass}">${scheme.confidence}% Match</span>
+          <span class="scheme-tag match-${matchClass}">${scheme.confidence}% ${matchLabel}</span>
           <span class="scheme-tag">${CATEGORY_META[scheme.category]?.emoji || ""} ${CATEGORY_META[scheme.category]?.label || ""}</span>
-          <span class="scheme-tag">${scheme.beneficiaries} beneficiaries</span>
+          <span class="scheme-tag">${scheme.beneficiaries} ${benLabel}</span>
         </div>
         <div class="scheme-card-footer">
           <div class="scheme-confidence">
@@ -542,38 +867,33 @@ if (schemesNavBtn) {
   );
 
   // ---- MODAL ----
-  function openModal(scheme) {
+  function openModal(schemeRaw) {
+    const scheme = getLocalizedScheme(schemeRaw);
+    const dict = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
     const matchClass = scheme.confidence >= 70 ? "high" : "med";
+    const applyNow = dict.applyNow || 'Apply Now';
+    const close = dict.close || 'Close';
     modalBody.innerHTML = `
       <h2>${scheme.icon} ${scheme.name}</h2>
       <p class="modal-ministry">${scheme.ministry}</p>
       <span class="modal-badge ${matchClass}">AI Match: ${scheme.confidence}%</span>
-      <div class="modal-section">
-        <h3>📝 Description</h3>
-        <p>${scheme.description}</p>
-      </div>
-      <div class="modal-section">
-        <h3>✅ Key Benefits</h3>
-        <ul>${scheme.benefits.map((b) => `<li>${b}</li>`).join("")}</ul>
-      </div>
-      <div class="modal-section">
-        <h3>📋 How to Apply</h3>
-        <p>${scheme.howToApply}</p>
-      </div>
-      <div class="modal-section">
-        <h3>🤖 AI Recommendation</h3>
-        <p>${generateAIRecommendation(scheme)}</p>
-      </div>
+      <div class="modal-section"><h3>📝 ${dict.modalDesc || "Description"}</h3><p>${scheme.description}</p></div>
+      <div class="modal-section"><h3>✅ ${dict.modalBenefits || "Key Benefits"}</h3><ul>${scheme.benefits.map((b) => `<li>${b}</li>`).join("")}</ul></div>
+      <div class="modal-section"><h3>📋 ${dict.modalApply || "How to Apply"}</h3><p>${scheme.howToApply}</p></div>
+      <div class="modal-section"><h3>🤖 ${dict.modalAiRec || "AI Recommendation"}</h3><p class="auto-translate" data-raw-en="${generateAIRecommendation(scheme).replace(/"/g, '&quot;')}">${generateAIRecommendation(scheme)}</p></div>
       <div class="modal-apply">
         <a href="${scheme.link}" target="_blank" rel="noopener" class="btn btn-primary">
-          <span>Apply Now</span>
+          <span>${applyNow}</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
         </a>
-        <button class="btn btn-glass" onclick="this.closest('.modal-overlay').classList.add('hidden')">Close</button>
+        <button class="btn btn-glass" onclick="this.closest('.modal-overlay').classList.add('hidden')">${close}</button>
       </div>
     `;
     modal.classList.remove("hidden");
     body.style.overflow = "hidden";
+    
+    // Auto translate AI recommendations and modal dynamic content if necessary
+    translateAutoElements(currentLang);
   }
 
   modalClose.addEventListener("click", closeModal);
@@ -664,7 +984,7 @@ if (schemesNavBtn) {
   }
 
   // ---- ANALYTICS ----
-  function renderAnalytics(profile, schemes) {
+  async function renderAnalytics(profile, schemes) {
     const highSchemes = schemes.filter((s) => s.confidence >= 70);
     const totalBenefit = schemes.reduce((a, s) => a + (s.potentialBenefit || 0), 0);
     const categories = [...new Set(schemes.map((s) => s.category))];
@@ -685,9 +1005,10 @@ if (schemesNavBtn) {
     Object.entries(catCounts).forEach(([cat, count]) => {
       const meta = CATEGORY_META[cat] || {};
       const pct = Math.round((count / maxCount) * 100);
+      let catLabel = meta.label || cat;
       chartBars.innerHTML += `
         <div class="chart-bar-row">
-          <span class="chart-bar-label">${meta.emoji || ""} ${meta.label || cat}</span>
+          <span class="chart-bar-label chart-cat-label" data-cat="${cat}">${meta.emoji || ""} ${catLabel}</span>
           <div class="chart-bar-track">
             <div class="chart-bar-fill ${meta.color || "purple"}" style="width:0%" data-width="${pct}%">${count}</div>
           </div>
@@ -700,19 +1021,48 @@ if (schemesNavBtn) {
       });
     }, 200);
 
-    // Profile summary
+    const dict = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
     const pd = $("#profile-details");
     pd.innerHTML = [
-      ["Name", profile.name],
-      ["Age", profile.age],
-      ["Gender", capitalize(profile.gender)],
-      ["State", capitalize(profile.state.replace(/-/g, " "))],
-      ["Occupation", capitalize(profile.occupation.replace(/-/g, " "))],
-      ["Income", incomeLabel(profile.income)],
-      ["Category", profile.category.toUpperCase()],
-      ["Education", capitalize((profile.education || "N/A").replace(/-/g, " "))],
-      ["Residence", capitalize(profile.residence || "N/A")],
-    ].map(([k, v]) => `<div class="profile-row"><span class="profile-row-key">${k}</span><span class="profile-row-val">${v}</span></div>`).join("");
+      [dict.profName || "Name", profile.name],
+      [dict.profAge || "Age", profile.age],
+      [dict.profGender || "Gender", capitalize(profile.gender)],
+      [dict.profState || "State", capitalize(profile.state.replace(/-/g, " "))],
+      [dict.profOccupation || "Occupation", capitalize(profile.occupation.replace(/-/g, " "))],
+      [dict.profIncome || "Income", incomeLabel(profile.income)],
+      [dict.profCategory || "Category", profile.category.toUpperCase()],
+      [dict.profEducation || "Education", capitalize((profile.education || "N/A").replace(/-/g, " "))],
+      [dict.profResidence || "Residence", capitalize(profile.residence || "N/A")],
+    ].map(([k, v]) => `<div class="profile-row"><span class="profile-row-key">${k}</span><span class="profile-row-val dynamic-val">${v}</span></div>`).join("");
+
+    // Dynamically translate categories and profile values
+    if (currentLang !== "en") {
+      $$(".dynamic-val").forEach(async (el) => {
+        const text = el.textContent;
+        // Check if string contains numbers only, or is empty/N/A
+        if (!text || text === "N/A" || !isNaN(text) || text.length < 2) return;
+        try {
+           const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${currentLang}&dt=t&q=${encodeURIComponent(text)}`;
+           const res = await fetch(url);
+           const data = await res.json();
+           el.textContent = data[0].map(x => x[0]).join('');
+        } catch(e) {}
+      });
+
+      // Translate categories in chart
+      $$(".chart-cat-label").forEach(async (el) => {
+        const cat = el.dataset.cat;
+        const meta = CATEGORY_META[cat] || {};
+        const text = meta.label || cat;
+        if (!text) return;
+        try {
+           const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${currentLang}&dt=t&q=${encodeURIComponent(text)}`;
+           const res = await fetch(url);
+           const data = await res.json();
+           el.innerHTML = `${meta.emoji || ""} ${data[0].map(x => x[0]).join('')}`;
+        } catch(e) {}
+      });
+    }
   }
   function generateDetailedReport(profile, schemes) {
 

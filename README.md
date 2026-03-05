@@ -1,4 +1,5 @@
-# 🏛️ PolicyPath / GovScheme AI  
+# 🏛️ PolicyPath / GovScheme AI
+
 **AI-Powered Government Scheme Discovery Platform**
 
 PolicyPath is a lightweight static web application that intelligently matches government schemes to a user's profile using a rule-based AI-style matching engine.
@@ -11,13 +12,13 @@ Designed for zero-backend deployment, accessibility, and easy extensibility.
 
 PolicyPath helps users discover relevant government schemes based on:
 
-- Income level  
-- Category / Social group  
-- Occupation  
-- Education  
-- Gender  
-- Location  
-- Special conditions  
+- Income level
+- Category / Social group
+- Occupation
+- Education
+- Gender
+- Location
+- Special conditions
 
 The system evaluates eligibility criteria and generates a confidence score for each scheme.
 
@@ -54,24 +55,27 @@ http://localhost:8000
 ## 🧠 Core Features
 
 ### 1. AI-like Matching Engine
-- Rule-based scoring system  
-- Multi-criteria eligibility evaluation  
-- Confidence percentage calculation  
-- Dynamic recommendation generation  
+
+- Rule-based scoring system
+- Multi-criteria eligibility evaluation
+- Confidence percentage calculation
+- Dynamic recommendation generation
 
 **Implemented in:**  
-`matchSchemes()` — app.js  
+`matchSchemes()` — app.js
 
 ---
 
 ### 2. Interactive Multi-Step Form
-- Profile-based questionnaire  
-- Real-time UI transitions  
-- Clean and responsive design  
 
-**Files:**  
-- index.html  
-- styles.css  
+- Profile-based questionnaire
+- Real-time UI transitions
+- Clean and responsive design
+
+**Files:**
+
+- index.html
+- styles.css
 
 ---
 
@@ -79,12 +83,12 @@ http://localhost:8000
 
 Each scheme record contains:
 
-- Eligibility rules  
-- Benefits description  
-- Potential financial benefit  
-- Rating  
-- Target demographics  
-- Category metadata  
+- Eligibility rules
+- Benefits description
+- Potential financial benefit
+- Rating
+- Target demographics
+- Category metadata
 
 **Data file:**  
 `schemes-data.js`
@@ -95,14 +99,15 @@ Each scheme record contains:
 
 After submission, users can see:
 
-- Total matched schemes  
-- Category distribution  
-- Benefit estimation  
-- Confidence scoring  
+- Total matched schemes
+- Category distribution
+- Benefit estimation
+- Confidence scoring
 
-**Functions:**  
-- `renderAnalytics()`  
-- `showResults()`  
+**Functions:**
+
+- `renderAnalytics()`
+- `showResults()`
 
 ---
 
@@ -124,12 +129,19 @@ Generates contextual advisory text per scheme.
 
 ---
 
-### 7. Localization Support
+### 7. Full 8-Language Localization (Auto-Translating Engine)
 
-Translation system for multi-language support.
+Native support for **English, Hindi, Marathi, Tamil, Telugu, Bengali, Gujarati, and Kannada**.
+The platform leverages a built-in background dynamic translation engine using Google Translate API to automatically batch-translate government schemes, UI elements, and form dropdowns in real-time natively without full-page reloads.
 
 **File:**  
-`translation.js`
+`translation.js` & `app.js` (translateAllSchemes, translateAutoElements)
+
+---
+
+### 8. Interactive AI Chatbot
+
+A contextual chatbot built directly into the sidebar that guides users through the form, answers basic questions, handles validation errors, and dynamically translates its own responses into the user's selected language.
 
 ---
 
@@ -139,10 +151,10 @@ Translation system for multi-language support.
 PolicyPath/
 │
 ├── index.html            # Main UI
-├── app.js                # Core logic & matching engine
+├── app.js                # Core logic, matching engine & AI Auto-Translate
 ├── schemes-data.js       # Scheme dataset + metadata
-├── styles.css            # Styling & responsive rules
-├── translation.js        # Localization strings
+├── styles.css            # Styling & responsive rules (Dark/Light themes)
+├── translation.js        # Localization strings (8 Languages)
 ├── LICENSE               # MIT License
 └── README.md
 ```
@@ -165,9 +177,9 @@ PolicyPath/
 
 5. **Sorting**  
    Schemes are sorted by:
-   - Confidence score  
-   - Rating  
-   - Estimated benefit  
+   - Confidence score
+   - Rating
+   - Estimated benefit
 
 ---
 
@@ -183,7 +195,7 @@ Each scheme object follows this structure:
   name: "Scheme Name",
   category: "Education",
   eligibility: { ... },
-  benefits: "Description of benefits",
+  benefits: ["Benefit 1"],
   potentialBenefit: 50000,
   rating: 4.5
 }
@@ -191,8 +203,7 @@ Each scheme object follows this structure:
 
 After editing:
 
-- Ensure eligibility fields align with `matchSchemes()`  
-- Test matching manually  
+- The Auto-Translate engine will detect new strings and automatically cache translated versions of the scheme in the user's local storage for lightning-fast performance.
 
 ---
 
@@ -200,43 +211,41 @@ After editing:
 
 To add a new language:
 
-1. Open `translation.js`  
-2. Add a new language key  
-3. Provide string mappings  
-4. Update language selector (if implemented)  
+1. Open `translation.js`
+2. Add a new language key
+3. Provide base string mappings for static UI elements.
+4. The Auto-Translate engine (`app.js`) handles all remaining dynamic dropdowns, scheme descriptions, and chat responses automatically!
 
 ---
 
 ## 🎯 Design Principles
 
-- No backend required  
-- Fully static and GitHub Pages compatible  
-- Modular JavaScript architecture  
-- Clean separation of concerns  
-- Responsive design  
-- Easily extensible dataset  
+- No backend required
+- Fully static and GitHub Pages compatible
+- Modular JavaScript architecture
+- Clean separation of concerns
+- Responsive design
+- Fully integrated Dark & Light themes (Including native Calendar / Form elements)
+- Easily extensible dataset
 
 ---
 
 ## 🔮 Future Improvements
 
-- JSON schema validation for schemes  
-- Admin panel for scheme upload  
-- API integration with official government data  
-- Machine learning-based ranking  
-- PDF export  
-- PWA support  
-- Dark mode  
-
----
+- JSON schema validation for schemes
+- Admin panel for scheme upload
+- API integration with official government data
+- Machine learning-based ranking
+- PDF export
+- PWA support--
 
 ## 🤝 Contribution Guidelines
 
-- Keep logic modular inside `app.js`  
-- Avoid hardcoded UI strings (use `translation.js`)  
-- Maintain responsiveness in `styles.css`  
-- Test eligibility logic thoroughly  
-- Run accessibility checks  
+- Keep logic modular inside `app.js`
+- Avoid hardcoded UI strings (use `translation.js`)
+- Maintain responsiveness in `styles.css`
+- Test eligibility logic thoroughly
+- Run accessibility checks
 
 ---
 
