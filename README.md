@@ -79,7 +79,7 @@ http://localhost:8000
 
 ---
 
-### 3. 65+ Curated Government Schemes
+### 3. 95+ Curated Government Schemes
 
 Each scheme record contains:
 
